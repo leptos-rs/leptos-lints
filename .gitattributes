@@ -1,2 +1,2 @@
-* text=auto
-Cargo.lock -diff
+* text=auto eol=lf
+Cargo.lock -diff linguist-generated=false
