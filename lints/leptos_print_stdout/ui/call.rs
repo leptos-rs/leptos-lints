@@ -1,4 +1,4 @@
-// Is not possible to use third party dependencies in dylint tests,
+// Is not possible to use third party dependencies in dylint tests
 // calling them without starting by a root path (`::`), like using
 // `leptos::logging::log!` instead of `::leptos::logging::log!`.
 // So we mock the `leptos::logging::log!` macro to test the lint.

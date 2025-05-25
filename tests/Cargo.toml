@@ -1,0 +1,7 @@
+[package]
+name = "tests"
+version = "0.1.0"
+authors = ["Álvaro Mondéjar Rubio"]
+description = "Integration tests for leptos_lints."
+edition = "2024"
+publish = false
