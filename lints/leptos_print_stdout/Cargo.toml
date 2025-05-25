@@ -1,0 +1,32 @@
+[package]
+name = "leptos_print_stdout"
+version = "0.1.0"
+authors = ["Álvaro Mondéjar Rubio"]
+description = "Check for Leptos logging usage."
+edition = "2024"
+rust-version = "1.85"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[example]]
+name = "call"
+path = "ui/call.rs"
+
+[dependencies]
+clippy_utils.workspace = true
+dylint_linting.workspace = true
+
+[dev-dependencies]
+dylint_testing.workspace = true
+leptos.workspace = true
+
+[package.metadata.rust-analyzer]
+rustc_private = true
+
+[features]
+rlib = ["dylint_linting/constituent"]
+
+[lints]
+workspace = true
