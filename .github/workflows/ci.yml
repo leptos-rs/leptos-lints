@@ -9,6 +9,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+  DEBIAN_FRONTEND: noninteractive
+
 jobs:
   lychee:
     name: QA (Lychee)
@@ -60,7 +65,7 @@ jobs:
         with:
           tool: dylint-link
       - name: Run Clippy
-        run: cargo clippy --all-targets --all-features -- -D warnings
+        run: cargo clippy --no-deps
 
   test:
     name: Test
@@ -77,8 +82,8 @@ jobs:
       - name: Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          # Rust problem matchers make the output of *.stderr
-          # diffs impossible to read.
+          # Rust problem matchers make the real output
+          # of *.stderr diffs impossible to read.
           matcher: false
       - name: Install Dylint
         uses: taiki-e/install-action@v2

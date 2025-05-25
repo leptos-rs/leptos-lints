@@ -27,7 +27,7 @@ dylint_linting::declare_pre_expansion_lint! {
     /// ```rust,ignore
     /// leptos::logging::log!("This is a log message");
     /// ```
-    /// 
+    ///
     /// Use instead:
     ///
     /// ```rust,ignore
