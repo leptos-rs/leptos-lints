@@ -18,7 +18,7 @@ Put the next configuration in the _Cargo.toml_ of your workspace.
 
 ```toml
 [workspace.metadata.dylint]
-libraries = [{ git = "https://github.com/leptos-lints/leptos-lints", tag = "v0.1.0" }]
+libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.0" }]
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ cargo dylint --all
 | ----------------------- | ------------------------------------------- |
 | [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!`. |
 
-[`leptos_print_stdout`]: https://github.com/leptos-lints/leptos-lints/tree/main/lints/leptos_print_stdout#readme
+[`leptos_print_stdout`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_print_stdout#readme
 
 [Dylint]: https://github.com/trailofbits/dylint
 [Leptos]: https://leptos.dev
