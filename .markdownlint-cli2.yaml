@@ -1,0 +1,4 @@
+config:
+  first-line-h1: false
+  line-length:
+    line_length: 100

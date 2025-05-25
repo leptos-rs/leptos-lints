@@ -1,0 +1,42 @@
+name: autofix.ci
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+  DEBIAN_FRONTEND: noninteractive
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt,clippy
+      - name: Install dylint-link
+        uses: taiki-e/install-action@v2
+        with:
+          tool: dylint-link
+      - name: Format
+        run: cargo fmt --all
+      - name: Clippy
+        run: cargo clippy --allow-dirty --fix --no-deps
+      - name: Markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v20
+        with:
+          globs: '**/*.md'
+          fix: true
+      - uses: autofix-ci/action@v1.3.1
+        if: ${{ always() }}
+        with:
+          fail-fast: false
