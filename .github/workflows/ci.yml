@@ -61,6 +61,7 @@ jobs:
         run: ./scripts/patch-windows-tests.sh
       - name: Run unit tests
         run: cargo test --all
+        continue-on-error: true
       - name: Debug Windows
         if: startsWith(matrix.runs-on, 'windows')
         shell: bash

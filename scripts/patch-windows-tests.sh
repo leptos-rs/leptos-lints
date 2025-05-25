@@ -7,7 +7,7 @@
 # Usage: ./scripts/patch-windows-tests.sh
 
 find lints/ -type f -name '*.stderr' | while IFS= read -r file; do
-  # from "$line" to "##[warning]$line" or "##[error]$line"
+  # from "$line" to "##[warning]$line\n$line" or "##[error]$line\n$line"
   # where "$line" starts with "  --> $DIR/"
   new_content=""
   inside=""
@@ -22,12 +22,15 @@ find lints/ -type f -name '*.stderr' | while IFS= read -r file; do
       inside="error"
     fi;
 
-    if [[ "$line" == \ \ --\>\ \$DIR/* ]]; then
-      new_line="##[$inside]$line"
+    if [[ "$line" == \ \ --\>\ \$DIR/* ]] && [ -n "$inside" ] ; then
+      new_content+="##[$inside]$line"$'\n'
+      new_content+="$line"$'\n'
+      inside=""
+    else
+      new_content+="$line"$'\n'
     fi;
-    new_content+="$new_line"$'\n'
   done < "$file"
-  new_content+=$''
+  new_content+=$''  # additional newline at the end
 
   echo -n "$new_content" > "$file"
 done
