@@ -4,7 +4,7 @@
 # Unix systems. This script patches stderr outputs to match the ones on Unix
 # systems. It's designed to be run before tests in the CI pipeline.
 #
-# Usage: ./scripts/patch-windows-tests.bash
+# Usage: ./scripts/patch-windows-tests.sh
 
 find lints/ -type f -name '*.stderr' | while IFS= read -r file; do
   # from "$line" to "##[warning]$line" or "##[error]$line"
