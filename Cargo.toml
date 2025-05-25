@@ -17,7 +17,7 @@ dylint_linting.workspace = true
 rustc_private = true
 
 [workspace]
-members = ["lints/*"]
+members = [".", "lints/*"]
 
 [workspace.dependencies]
 clippy_utils = { git = "https://github.com/rust-lang/rust-clippy", rev = "0450db33a5d8587f7c1d4b6d233dac963605766b" }
