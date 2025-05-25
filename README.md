@@ -43,11 +43,18 @@ See `cargo dylint --help` for more options.
 
 ### RUSTFLAGS
 
-Lint levels can be configured using the `RUSTFLAGS` environment variable.
-For example, to set the `leptos_print_stdout` lint to `allow`, run the next command.
+Lint levels can be configured using the `RUSTFLAGS` environment variable. For
+example, to set the [`leptos_print_stdout`] lint to `deny`, run the next command.
 
 ```sh
-RUSTFLAGS="-Aleptos_print_stdout" cargo dylint --all
+RUSTFLAGS="-Dleptos_print_stdout" cargo dylint --all
+```
+
+Or in the file _.cargo/config.toml*_ to avoid repeating the command.
+
+```toml
+[target.'cfg(all())']
+rustflags = ["-Dleptos_print_stdout"]
 ```
 
 [Dylint]: https://github.com/trailofbits/dylint
