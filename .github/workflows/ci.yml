@@ -36,6 +36,15 @@ jobs:
           tool: cargo-machete
       - name: Run cargo-machete
         run: cargo machete --skip-target-dir
+  
+  markdownlint:
+    name: QA (Markdownlint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v20
+        with:
+          globs: '**/*.md'
 
   unit-tests:
     name: Unit tests
