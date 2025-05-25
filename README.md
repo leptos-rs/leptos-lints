@@ -38,6 +38,8 @@ libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.0"
 
 #### RUSTFLAGS
 
+Use the `RUSTFLAGS` environment variable to set lint levels for each lint.
+
 For example, to set [`leptos_print_stdout`] lint to `deny`, run the next command.
 
 ```sh
@@ -50,6 +52,9 @@ Or in the file _.cargo/config.toml_ to avoid repeating the command.
 [target.'cfg(all())']
 rustflags = ["-Dleptos_print_stdout"]
 ```
+
+The downside of this approach is that the project will be compiled from scratch
+every time you edit the `RUSTFLAGS` variable.
 
 #### Cargo.toml
 
