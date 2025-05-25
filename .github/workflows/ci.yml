@@ -45,8 +45,20 @@ jobs:
       - uses: DavidAnson/markdownlint-cli2-action@v20
         with:
           globs: '**/*.md'
+  
+  clippy:
+    name: QA (Clippy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: clippy
+      - name: Run Clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings
 
-  unit-tests:
+  test:
     name: Test
     runs-on: ${{ matrix.runs-on }}
     strategy:

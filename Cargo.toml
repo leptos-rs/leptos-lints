@@ -25,6 +25,12 @@ dylint_linting = "4.1.0"
 dylint_testing = "4.1.0"
 leptos = ">=0.5"
 
+[workspace.lints.clippy]
+all = "deny"
+
+[workspace.lints.rust]
+warnings = "deny"
+
 [workspace.lints.rust.unexpected_cfgs]
 level = "deny"
 check-cfg = ["cfg(dylint_lib, values(any()))"]
