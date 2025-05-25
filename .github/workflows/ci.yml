@@ -68,3 +68,6 @@ jobs:
           key: ${{ runner.os }}-cargo-unit-${{ hashFiles('**/Cargo.lock') }}
       - name: Run unit tests
         run: cargo test --all
+      - name: Debug Windows
+        if: matrix.runs-on == 'windows-latest'
+        run: cat C:\Users\RUNNER~1\AppData\Local\Temp\call.stage-id.stderr
