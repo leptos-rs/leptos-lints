@@ -51,6 +51,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          matcher: false
       - name: Install Dylint
         uses: taiki-e/install-action@v2
         with:
@@ -61,12 +63,12 @@ jobs:
         run: |
           echo "Previous content of lints/leptos_print_stdout/ui/call.stderr:"
           cat lints/leptos_print_stdout/ui/call.stderr
-          ./scripts/patch-windows-tests.sh
-          echo "New content of lints/leptos_print_stdout/ui/call.stderr:"
-          cat lints/leptos_print_stdout/ui/call.stderr
+          #./scripts/patch-windows-tests.sh
+          #echo "New content of lints/leptos_print_stdout/ui/call.stderr:"
+          #cat lints/leptos_print_stdout/ui/call.stderr
       - name: Run unit tests
         run: cargo test --all
-        continue-on-error: true
+        continue-on-error: ${{ startsWith(matrix.runs-on, 'windows') }}
       - name: Debug Windows
         if: startsWith(matrix.runs-on, 'windows')
         shell: bash
