@@ -27,6 +27,8 @@ leptos = ">=0.5"
 
 [workspace.lints.clippy]
 all = "deny"
+pedantic = "deny"
+nursery = "warn"
 
 [workspace.lints.rust]
 warnings = "deny"
