@@ -47,7 +47,7 @@ jobs:
           globs: '**/*.md'
 
   unit-tests:
-    name: Unit tests
+    name: Test
     runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
