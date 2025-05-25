@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # On Windows, the stderr output of clippy is slightly different to the one on
-# Unix systems. This script patches the stderr output to match the one on Unix
+# Unix systems. This script patches stderr outputs to match the ones on Unix
 # systems. It's designed to be run before tests in the CI pipeline.
 #
-# Usage: ./scripts/patch-stderrs-windows.bash
+# Usage: ./scripts/patch-windows-tests.bash
 
 find lints/ -type f -name '*.stderr' | while IFS= read -r file; do
   # from "$line" to "##[warning]$line" or "##[error]$line"
