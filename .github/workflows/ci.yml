@@ -55,6 +55,10 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: clippy
+      - name: Install dylint-link
+        uses: taiki-e/install-action@v2
+        with:
+          tool: dylint-link
       - name: Run Clippy
         run: cargo clippy --all-targets --all-features -- -D warnings
 
