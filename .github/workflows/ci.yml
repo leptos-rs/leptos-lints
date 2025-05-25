@@ -58,11 +58,18 @@ jobs:
       - name: Patch Windows tests
         if: startsWith(matrix.runs-on, 'windows')
         shell: bash
-        run: ./scripts/patch-windows-tests.sh
+        run: |
+          echo "Previous content of lints/leptos_print_stdout/ui/call.stderr:"
+          cat lints/leptos_print_stdout/ui/call.stderr
+          ./scripts/patch-windows-tests.sh
+          echo "New content of lints/leptos_print_stdout/ui/call.stderr:"
+          cat lints/leptos_print_stdout/ui/call.stderr
       - name: Run unit tests
         run: cargo test --all
         continue-on-error: true
       - name: Debug Windows
         if: startsWith(matrix.runs-on, 'windows')
         shell: bash
-        run: cat C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\call.stage-id.stderr
+        run: |
+          echo "STDERR output of call.stage-id.stderr:"
+          cat C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\call.stage-id.stderr

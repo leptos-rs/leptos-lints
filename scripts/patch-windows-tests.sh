@@ -24,7 +24,6 @@ find lints/ -type f -name '*.stderr' | while IFS= read -r file; do
 
     if [[ "$line" == \ \ --\>\ \$DIR/* ]] && [ -n "$inside" ] ; then
       new_content+="##[$inside]$line"$'\n'
-      new_content+="$line"$'\n'
       inside=""
     else
       new_content+="$line"$'\n'
