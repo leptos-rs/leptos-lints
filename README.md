@@ -2,17 +2,13 @@
 
 [Dylint] lints for apps created with the [Leptos] framework.
 
-## Installation
+## Quick start
 
 Install [Dylint] with
 
 ```sh
 cargo install cargo-dylint dylint-link
 ```
-
-## Configuration
-
-### Workspace
 
 Put the next configuration in the _Cargo.toml_ of your workspace.
 
@@ -21,27 +17,26 @@ Put the next configuration in the _Cargo.toml_ of your workspace.
 libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.0" }]
 ```
 
-## Usage
-
 Run the lints with
 
 ```sh
 cargo dylint --all
 ```
 
-See `cargo dylint --help` for more options.
+See `cargo dylint --help` for more information.
 
-## Lints
+## Configuration
 
-| Rule                    | Description                                 |
-| ----------------------- | ------------------------------------------- |
-| [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!`. |
+### Workspace
 
-[`leptos_print_stdout`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_print_stdout#readme
+```toml
+[workspace.metadata.dylint]
+libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.0" }]
+```
 
-## Configuring lint levels
+### Lint levels
 
-### RUSTFLAGS
+#### RUSTFLAGS
 
 Lint levels can be configured using the `RUSTFLAGS` environment variable. For
 example, to set the [`leptos_print_stdout`] lint to `deny`, run the next command.
@@ -50,12 +45,20 @@ example, to set the [`leptos_print_stdout`] lint to `deny`, run the next command
 RUSTFLAGS="-Dleptos_print_stdout" cargo dylint --all
 ```
 
-Or in the file _.cargo/config.toml*_ to avoid repeating the command.
+Or in the file _.cargo/config.toml_ to avoid repeating the command.
 
 ```toml
 [target.'cfg(all())']
 rustflags = ["-Dleptos_print_stdout"]
 ```
+
+## Lints
+
+| Rule                    | Description                                 |
+| ----------------------- | ------------------------------------------- |
+| [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!`. |
+
+[`leptos_print_stdout`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_print_stdout#readme
 
 [Dylint]: https://github.com/trailofbits/dylint
 [Leptos]: https://leptos.dev
