@@ -63,7 +63,7 @@ jobs:
         with:
           tool: dylint-link
       - name: Run Clippy
-        run: cargo clippy --no-deps
+        run: cargo clippy -- -Dwarnings
 
   test:
     name: Test

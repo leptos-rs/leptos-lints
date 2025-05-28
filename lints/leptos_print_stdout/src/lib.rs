@@ -31,11 +31,16 @@ dylint_linting::declare_pre_expansion_lint! {
     /// Use instead:
     ///
     /// ```rust,ignore
-    /// #[allow(unknown_lints)]
     /// #[allow(leptos_print_stdout)]
     /// {
     ///     leptos::logging::log!("This is a log message");
     /// }
+    /// ```
+    ///
+    /// ```rust,ignore
+    /// use leptos::logging::log;
+    ///
+    /// log!("This is a log message");
     /// ```
     pub LEPTOS_PRINT_STDOUT,
     Warn,

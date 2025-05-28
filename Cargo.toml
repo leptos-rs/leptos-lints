@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Álvaro Mondéjar Rubio"]
 description = "Dylint lints for apps created with the Leptos framework."
 edition = "2024"
+license = "Apache-2.0"
 publish = false
 
 [lib]
@@ -26,12 +27,14 @@ dylint_testing = "4.1.0"
 leptos = ">=0.5"
 
 [workspace.lints.clippy]
-all = "deny"
-pedantic = "deny"
-nursery = "warn"
-
-[workspace.lints.rust]
-warnings = "deny"
+pedantic = { level = "deny", priority = -1 }
+perf = { level = "deny", priority = -1 }
+suspicious = { level = "deny", priority = -1 }
+style = { level = "deny", priority = -1 }
+complexity = { level = "deny", priority = -1 }
+cargo = { level = "deny", priority = -1 }
+print_stdout = "deny"
+too_many_lines = "allow"
 
 [workspace.lints.rust.unexpected_cfgs]
 level = "deny"
