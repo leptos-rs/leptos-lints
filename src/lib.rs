@@ -9,6 +9,5 @@ extern crate rustc_session;
 #[expect(clippy::no_mangle_with_rust_abi)]
 #[unsafe(no_mangle)]
 pub fn register_lints(sess: &rustc_session::Session, lint_store: &mut rustc_lint::LintStore) {
-    // smoelius: Please keep the following `register_lints` calls sorted by crate name.
     leptos_print_stdout::register_lints(sess, lint_store);
 }

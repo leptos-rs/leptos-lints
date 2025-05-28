@@ -26,9 +26,14 @@ leptos::logging::log!("This is a log message");
 Use instead:
 
 ```rust,ignore
-#[allow(unknown_lints)]
 #[allow(leptos_print_stdout)]
 {
     leptos::logging::log!("This is a log message");
 }
+```
+
+```rust,ignore
+use leptos::logging::log;
+
+log!("This is a log message");
 ```

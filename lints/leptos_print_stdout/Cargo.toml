@@ -2,9 +2,8 @@
 name = "leptos_print_stdout"
 version = "0.1.0"
 authors = ["Álvaro Mondéjar Rubio"]
-description = "Check for Leptos logging usage."
+description = "Check for calls to `leptos::logging::log!`."
 edition = "2024"
-rust-version = "1.85"
 publish = false
 
 [lib]
