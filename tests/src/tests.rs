@@ -172,7 +172,7 @@ fn lints_readmes_are_updated() {
 
 /// Ensure that each lint has a help link pointing to its README.md file.
 #[test]
-fn all_links_have_help_link() {
+fn all_lints_have_help_link() {
     for (lint_name, path) in LintDirectories::new() {
         let lint_lib_rs_path = path.join("src").join("lib.rs");
         let lint_lib_rs_content = std::fs::read_to_string(&lint_lib_rs_path)
