@@ -1,11 +1,12 @@
 [package]
 name = "leptos_lints"
-version = "0.1.0"
+version.workspace = true
 authors = ["Álvaro Mondéjar Rubio"]
 description = "Dylint lints for apps created with the Leptos framework."
-edition = "2024"
-license = "Apache-2.0"
-publish = false
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+repository.workspace = true
 
 [lib]
 crate-type = ["cdylib"]
@@ -18,13 +19,19 @@ dylint_linting.workspace = true
 rustc_private = true
 
 [workspace]
-members = [".", "lints/*", "tests"]
+members = [".", "lints/*", "tests", "lints/*/tests/*mock"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+publish = false
+license = "Apache-2.0"
+repository = "https://github.com/leptos-rs/leptos-lints"
 
 [workspace.dependencies]
 clippy_utils = { git = "https://github.com/rust-lang/rust-clippy", rev = "0450db33a5d8587f7c1d4b6d233dac963605766b" }
 dylint_linting = "4.1.0"
 dylint_testing = "4.1.0"
-leptos = ">=0.5"
 
 [workspace.lints.clippy]
 pedantic = { level = "deny", priority = -1 }

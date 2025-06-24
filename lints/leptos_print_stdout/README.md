@@ -19,20 +19,20 @@ Only catches `leptos::logging::log!` calls.
 
 ### Example
 
-```rust,ignore
+```rust
 leptos::logging::log!("This is a log message");
 ```
 
 Use instead:
 
-```rust,ignore
+```rust
 #[allow(leptos_print_stdout)]
 {
     leptos::logging::log!("This is a log message");
 }
 ```
 
-```rust,ignore
+```rust
 use leptos::logging::log;
 
 log!("This is a log message");
