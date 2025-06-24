@@ -24,27 +24,27 @@ dylint_linting::declare_pre_expansion_lint! {
     ///
     /// ### Example
     ///
-    /// ```rust,ignore
+    /// ```rust
     /// leptos::logging::log!("This is a log message");
     /// ```
     ///
     /// Use instead:
     ///
-    /// ```rust,ignore
+    /// ```rust
     /// #[allow(leptos_print_stdout)]
     /// {
     ///     leptos::logging::log!("This is a log message");
     /// }
     /// ```
     ///
-    /// ```rust,ignore
+    /// ```rust
     /// use leptos::logging::log;
     ///
     /// log!("This is a log message");
     /// ```
     pub LEPTOS_PRINT_STDOUT,
     Warn,
-    "Check for Leptos logging usage."
+    "Check for calls to `leptos::logging::log!`."
 }
 
 impl EarlyLintPass for LeptosPrintStdout {
@@ -80,7 +80,7 @@ impl EarlyLintPass for LeptosPrintStdout {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn ui() {
-        dylint_testing::ui_test(env!("CARGO_PKG_NAME"), "ui");
+    fn ui_examples() {
+        dylint_testing::ui_test_examples(env!("CARGO_PKG_NAME"));
     }
 }

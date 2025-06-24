@@ -1,5 +1,5 @@
 warning: use of `leptos::logging::log!`
-  --> $DIR/call.rs:19:5
+  --> $DIR/call.rs:2:5
    |
 LL |     leptos::logging::log!("foo");
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -8,7 +8,7 @@ LL |     leptos::logging::log!("foo");
    = note: `#[warn(leptos_print_stdout)]` on by default
 
 warning: use of `leptos::logging::log!`
-  --> $DIR/call.rs:28:5
+  --> $DIR/call.rs:11:5
    |
 LL |     ::leptos::logging::log!("bar");
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
