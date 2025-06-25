@@ -282,7 +282,8 @@ fn lints_table_is_updated() {
                 });
             let lowercased_lint_level = lint_level.to_lowercase();
 
-            let table_line = format!("| [`{lint_name}`] | {lint_description} | {lowercased_lint_level} |\n");
+            let table_line =
+                format!("| [`{lint_name}`] | {lint_description} | {lowercased_lint_level} |\n");
             table_content.push_str(&table_line);
 
             let def_links_line = format!(
