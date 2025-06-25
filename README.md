@@ -82,7 +82,7 @@ The downside of this approach is that unknown lints will be allowed by default.
 
 | Rule | Description | Default level |
 | --- | --- | :-: |
-| [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!`. | Warn |
+| [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!` | Warn |
 
 [`leptos_print_stdout`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_print_stdout#readme
 
