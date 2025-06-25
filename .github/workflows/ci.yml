@@ -64,6 +64,19 @@ jobs:
           tool: dylint-link
       - name: Run Clippy
         run: cargo clippy -- -Dwarnings
+  
+  cargo-workspace-lints:
+    name: QA (Cargo Workspace Lints)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-workspace-lints
+      - name: Run cargo-workspace-lints
+        run: cargo workspace-lints
 
   test:
     name: Test

@@ -44,7 +44,7 @@ dylint_linting::declare_pre_expansion_lint! {
     /// ```
     pub LEPTOS_PRINT_STDOUT,
     Warn,
-    "Check for calls to `leptos::logging::log!`."
+    "Check for calls to `leptos::logging::log!`"
 }
 
 impl EarlyLintPass for LeptosPrintStdout {
