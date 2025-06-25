@@ -73,11 +73,15 @@ The downside of this approach is that unknown lints will be allowed by default.
 
 ## Lints
 
-| Rule                    | Description                                 |
-| ----------------------- | ------------------------------------------- |
-| [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!`. |
+<!-- lints table start -->
+
+| Rule | Description | Level |
+|---|---|:-:|
+| [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!`. | Warn |
 
 [`leptos_print_stdout`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_print_stdout#readme
+
+<!-- lints table end -->
 
 [Dylint]: https://github.com/trailofbits/dylint
 [Leptos]: https://leptos.dev

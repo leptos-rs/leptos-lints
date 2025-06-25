@@ -1,74 +1,32 @@
 use std::path::Path;
 
-fn extract_version_from_cargo_toml_content(content: &str, match_: &str) -> Option<String> {
-    for line in content.lines() {
-        if line.starts_with(match_) {
-            return line.split('"').nth(1).map(|s| s.to_string());
-        }
-    }
-    None
-}
-
-fn extract_versions_from_readme_content(content: &str) -> Vec<String> {
-    let mut versions = Vec::new();
-    for line in content.lines() {
-        if line.contains("tag = \"") {
-            if let Some(tag_version) = line.split('"').nth(3) {
-                let version = tag_version
-                    .strip_prefix('v')
-                    .expect("Tag version should start with 'v'")
-                    .to_string();
-                versions.push(version.to_string());
-            }
-        }
-    }
-    versions
-}
-
-/// Lint directories iterator.
-struct LintDirectories(std::fs::ReadDir);
-
-impl LintDirectories {
-    fn new() -> Self {
-        let lints_dir = Path::new(env!("CARGO_MANIFEST_DIR"))
-            .join("..")
-            .join("lints");
-        let candidates = std::fs::read_dir(lints_dir).expect("Failed to read lints directory");
-        Self(candidates)
-    }
-}
-
-impl Iterator for LintDirectories {
-    type Item = (String, std::path::PathBuf);
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if let Some(Ok(entry)) = self.0.next() {
-            let path = entry.path();
-            if !path.is_dir() {
-                return self.next();
-            }
-            let lint_name = path
-                .file_name()
-                .and_then(|name| name.to_str())
-                .expect("Failed to get lint name");
-            Some((lint_name.to_string(), path))
-        } else {
-            None
-        }
-    }
-}
-
 /// The README.md file contains examples about how to configure the lints.
 /// Versions of these examples should match the version of the crate.
 #[test]
 fn version_is_updated_in_readme() {
+    fn extract_versions_from_readme_content(content: &str) -> Vec<String> {
+        let mut versions = Vec::new();
+        for line in content.lines() {
+            if line.contains("tag = \"") {
+                if let Some(tag_version) = line.split('"').nth(3) {
+                    let version = tag_version
+                        .strip_prefix('v')
+                        .expect("Tag version should start with 'v'")
+                        .to_string();
+                    versions.push(version.to_string());
+                }
+            }
+        }
+        versions
+    }
+
     let main_cargo_toml_path = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("..")
         .join("Cargo.toml");
     let main_cargo_toml_content =
         std::fs::read_to_string(&main_cargo_toml_path).expect("Failed to read Cargo.toml");
     let expected_version =
-        extract_version_from_cargo_toml_content(&main_cargo_toml_content, "version =")
+        extract_str_field_from_cargo_toml_content(&main_cargo_toml_content, "version =")
             .expect("Failed to extract version from Cargo.toml");
     let readme_path = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("..")
@@ -194,5 +152,286 @@ fn lints_have_help_link() {
             lint_lib_rs_path.display(),
             expected_link,
         );
+    }
+}
+
+/// Check that lints are registered.
+///
+/// Currently, the project only contains one lint library. If, in the future,
+/// we add more lint libraries (e.g., `all`, `recommended`, `pedantic`, `restriction`...),
+/// this test should be updated to check if lints are registered in the `all` lint library.
+#[test]
+fn lints_are_registered() {
+    let all_lints_src_lib_path = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join("src")
+        .join("lib.rs");
+    let all_lints_src_lib_content =
+        std::fs::read_to_string(&all_lints_src_lib_path).expect("Failed to read src/lib.rs");
+    let expected_lint_names = LintDirectories::new()
+        .map(|(name, _)| name)
+        .collect::<Vec<_>>();
+
+    fn extract_registered_lint_names(content: &str) -> Vec<String> {
+        let mut registered_lint_names = Vec::new();
+        let mut inside_register_lints_fn_body = false;
+        for line in content.lines() {
+            if !inside_register_lints_fn_body {
+                if line.contains("fn register_lints") {
+                    inside_register_lints_fn_body = true;
+                }
+            } else {
+                if line.starts_with("}") {
+                    break;
+                }
+
+                if line.contains("::register_lints(") {
+                    let lint_name = line.split_once("::").unwrap().0.trim_ascii_start();
+                    registered_lint_names.push(lint_name.to_string());
+                }
+            }
+        }
+
+        registered_lint_names
+    }
+
+    let registered_lint_names = extract_registered_lint_names(&all_lints_src_lib_content);
+
+    for lint_name in &registered_lint_names {
+        assert!(
+            expected_lint_names.contains(lint_name),
+            "Lint `{lint_name}` is registered in src/lib.rs, but it is not present in the lints directory",
+        );
+    }
+
+    for expected_lint_name in &expected_lint_names {
+        assert!(
+            registered_lint_names.contains(expected_lint_name),
+            "Lint `{expected_lint_name}` is present in the lints directory, but it is not registered in src/lib.rs",
+        );
+    }
+}
+
+/// Check that all lint names are prefixed with `leptos_`.
+///
+/// So it's easier to know from the configuration that they come from a lints
+/// library for Leptos and they apply to code related to Leptos.
+#[test]
+fn lint_names_are_prefixed() {
+    for (lint_name, _) in LintDirectories::new() {
+        assert!(
+            lint_name.starts_with("leptos_"),
+            "Lint `{lint_name}` does not start with `leptos_` prefix",
+        );
+    }
+}
+
+/// Ensure that the lints table in README is up to date.
+///
+/// The table is generated in this test. It will fail if the table is not
+/// updated, but will pass on a second run.
+#[test]
+fn lints_table_is_updated() {
+    fn extract_lint_level_from_source_code(content: &str) -> Option<String> {
+        let mut inside_doc_comment = false;
+        for line in content.lines() {
+            let trimmed_line = line.trim();
+            if !inside_doc_comment {
+                if trimmed_line.starts_with("///") {
+                    inside_doc_comment = true;
+                }
+            } else if !trimmed_line.starts_with("///")
+                && (trimmed_line.contains("Allow")
+                    || trimmed_line.contains("Expect")
+                    || trimmed_line.contains("Warn")
+                    || trimmed_line.contains("ForceWarn")
+                    || trimmed_line.contains("Deny")
+                    || trimmed_line.contains("Forbid"))
+            {
+                return Some(trimmed_line.trim_end_matches(',').to_string());
+            }
+        }
+        None
+    }
+
+    fn generate_lints_table_content() -> String {
+        let mut table_content = String::new();
+        table_content.push_str("| Rule | Description | Level |\n");
+        table_content.push_str("|---|---|:-:|\n");
+
+        let mut def_links_content = String::new();
+
+        for (lint_name, path) in LintDirectories::new() {
+            let lint_cargo_toml_path = path.join("Cargo.toml");
+            let lint_cargo_toml_content = std::fs::read_to_string(&lint_cargo_toml_path)
+                .unwrap_or_else(|_| panic!("Failed to read lints/{lint_name}/Cargo.toml"));
+            let lint_description = extract_str_field_from_cargo_toml_content(
+                &lint_cargo_toml_content,
+                "description =",
+            )
+            .unwrap_or_else(|| {
+                panic!("Failed to extract description from lints/{lint_name}/Cargo.toml")
+            });
+
+            let lint_lib_rs_path = path.join("src").join("lib.rs");
+            let lint_lib_rs_content = std::fs::read_to_string(&lint_lib_rs_path)
+                .unwrap_or_else(|_| panic!("Failed to read lints/{lint_name}/src/lib.rs"));
+            let lint_level = extract_lint_level_from_source_code(&lint_lib_rs_content)
+                .unwrap_or_else(|| {
+                    panic!("Failed to extract lint level from lints/{lint_name}/src/lib.rs")
+                });
+
+            let table_line = format!("| [`{lint_name}`] | {lint_description} | {lint_level} |\n");
+            table_content.push_str(&table_line);
+
+            let def_links_line = format!(
+                "[`{lint_name}`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/{lint_name}#readme\n"
+            );
+            def_links_content.push_str(&def_links_line);
+        }
+
+        format!("\n{table_content}\n{def_links_content}")
+    }
+
+    let readme_path = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join("README.md");
+    let readme_content = std::fs::read_to_string(&readme_path).expect("Failed to read README.md");
+    let readme_content_before_table = readme_content
+        .split_once("<!-- lints table start -->")
+        .expect(r#"Comment "<!-- lints table start -->" not found in README.md"#)
+        .0;
+    let readme_content_after_table = readme_content
+        .split_once("<!-- lints table end -->")
+        .expect(r#"Comment "<!-- lints table end -->" not found in README.md"#)
+        .1;
+
+    let table_content = generate_lints_table_content();
+    let expected_readme_content = format!(
+        "{readme_content_before_table}<!-- lints table start -->\n{table_content}\n<!-- lints table end -->{readme_content_after_table}"
+    );
+
+    let in_ci = std::env::var("CI").is_ok();
+    let message = if in_ci {
+        format!(
+            "The lints table in README is not updated. \
+              Run `cargo test -p tests` locally to update it them and commit the changes."
+        )
+    } else {
+        format!(
+            "The lints table in README has been updated. \
+             If you run again this test, it should pass."
+        )
+    };
+
+    if readme_content != expected_readme_content {
+        std::fs::write(&readme_path, &expected_readme_content)
+            .unwrap_or_else(|_| panic!("Failed to write README.md"));
+    }
+    assert!(readme_content == expected_readme_content, "{message}");
+}
+
+/// Ensure that all lints descriptions match between their *Cargo.toml* files
+/// and their lint definitions in the source code.
+#[test]
+fn lints_descriptions_match() {
+    fn extract_lint_description_from_source_code(content: &str) -> Option<String> {
+        let mut inside_doc_comment = false;
+        let mut after_level_definition = false;
+        for line in content.lines() {
+            let trimmed_line = line.trim();
+            if !inside_doc_comment && !after_level_definition {
+                if trimmed_line.starts_with("///") {
+                    inside_doc_comment = true;
+                }
+            } else if !after_level_definition && !trimmed_line.starts_with("///")
+                && (trimmed_line.contains("Allow")
+                    || trimmed_line.contains("Expect")
+                    || trimmed_line.contains("Warn")
+                    || trimmed_line.contains("ForceWarn")
+                    || trimmed_line.contains("Deny")
+                    || trimmed_line.contains("Forbid"))
+            {
+                after_level_definition = true;
+            } else if after_level_definition {
+                return Some(
+                    trimmed_line
+                        .trim_start_matches('"').trim_end_matches(',').trim_end_matches('"')
+                        .replace("\\\"", "\"")
+                );
+            }
+        }
+        None
+    }
+
+    for (lint_name, path) in LintDirectories::new() {
+        let lint_cargo_toml_path = path.join("Cargo.toml");
+        let lint_cargo_toml_content = std::fs::read_to_string(&lint_cargo_toml_path)
+            .unwrap_or_else(|_| panic!("Failed to read lints/{lint_name}/Cargo.toml"));
+        let expected_description =
+            extract_str_field_from_cargo_toml_content(&lint_cargo_toml_content, "description =")
+                .unwrap_or_else(|| {
+                    panic!("Failed to extract description from lints/{lint_name}/Cargo.toml")
+                });
+
+        let lint_lib_rs_path = path.join("src").join("lib.rs");
+        let lint_lib_rs_content = std::fs::read_to_string(&lint_lib_rs_path)
+            .unwrap_or_else(|_| panic!("Failed to read lints/{lint_name}/src/lib.rs"));
+        let actual_description = extract_lint_description_from_source_code(&lint_lib_rs_content)
+            .unwrap_or_else(|| {
+                panic!("Failed to extract description from lints/{lint_name}/src/lib.rs")
+            });
+
+        assert!(
+            expected_description == actual_description,
+            "Lint `{lint_name}` description does not match between Cargo.toml and source code.\n\
+            Cargo.toml: {expected_description}\n\
+            Source code: {actual_description}",
+        );
+    }
+}
+
+fn extract_str_field_from_cargo_toml_content(content: &str, match_: &str) -> Option<String> {
+    for line in content.lines() {
+        if line.starts_with(match_) {
+            return line
+                .split('"')
+                .nth(1)
+                .map(|s| s.to_string().replace("\\\"", "\""));
+        }
+    }
+    None
+}
+
+/// Lint directories iterator.
+struct LintDirectories(std::fs::ReadDir);
+
+impl LintDirectories {
+    fn new() -> Self {
+        let lints_dir = Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("..")
+            .join("lints");
+        let candidates = std::fs::read_dir(lints_dir).expect("Failed to read lints directory");
+        Self(candidates)
+    }
+}
+
+impl Iterator for LintDirectories {
+    type Item = (String, std::path::PathBuf);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(Ok(entry)) = self.0.next() {
+            let path = entry.path();
+            if !path.is_dir() {
+                return self.next();
+            }
+            let lint_name = path
+                .file_name()
+                .and_then(|name| name.to_str())
+                .expect("Failed to get lint name");
+            Some((lint_name.to_string(), path))
+        } else {
+            None
+        }
     }
 }
