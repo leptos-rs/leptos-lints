@@ -80,7 +80,7 @@ The downside of this approach is that unknown lints will be allowed by default.
 
 <!-- lints table start -->
 
-| Rule | Description | Level |
+| Rule | Description | Default level |
 | --- | --- | :-: |
 | [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!`. | Warn |
 

@@ -256,7 +256,7 @@ fn lints_table_is_updated() {
 
     fn generate_lints_table_content() -> String {
         let mut table_content = String::new();
-        table_content.push_str("| Rule | Description | Level |\n");
+        table_content.push_str("| Rule | Description | Default level |\n");
         table_content.push_str("| --- | --- | :-: |\n");
 
         let mut def_links_content = String::new();
