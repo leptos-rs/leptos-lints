@@ -257,7 +257,7 @@ fn lints_table_is_updated() {
     fn generate_lints_table_content() -> String {
         let mut table_content = String::new();
         table_content.push_str("| Rule | Description | Level |\n");
-        table_content.push_str("|---|---|:-:|\n");
+        table_content.push_str("| --- | --- | :-: |\n");
 
         let mut def_links_content = String::new();
 
@@ -308,7 +308,8 @@ fn lints_table_is_updated() {
 
     let table_content = generate_lints_table_content();
     let expected_readme_content = format!(
-        "{readme_content_before_table}<!-- lints table start -->\n{table_content}\n<!-- lints table end -->{readme_content_after_table}"
+        "{readme_content_before_table}<!-- lints table start -->\n{table_content}\n\
+        <!-- lints table end -->{readme_content_after_table}"
     );
 
     let in_ci = std::env::var("CI").is_ok();
