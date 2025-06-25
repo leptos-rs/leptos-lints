@@ -345,7 +345,8 @@ fn lints_descriptions_match() {
                 if trimmed_line.starts_with("///") {
                     inside_doc_comment = true;
                 }
-            } else if !after_level_definition && !trimmed_line.starts_with("///")
+            } else if !after_level_definition
+                && !trimmed_line.starts_with("///")
                 && (trimmed_line.contains("Allow")
                     || trimmed_line.contains("Expect")
                     || trimmed_line.contains("Warn")
@@ -357,8 +358,10 @@ fn lints_descriptions_match() {
             } else if after_level_definition {
                 return Some(
                     trimmed_line
-                        .trim_start_matches('"').trim_end_matches(',').trim_end_matches('"')
-                        .replace("\\\"", "\"")
+                        .trim_start_matches('"')
+                        .trim_end_matches(',')
+                        .trim_end_matches('"')
+                        .replace("\\\"", "\""),
                 );
             }
         }
