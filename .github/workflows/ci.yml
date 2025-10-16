@@ -27,7 +27,7 @@ jobs:
       - name: Run Lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --exclude ^https://github\.com/leptos-rs/leptos-lints.+\\.md$ --cache --max-cache-age 1d . 
+          args: --exclude ^https://github\.com/leptos-rs/leptos-lints.+ --cache --max-cache-age 1d . 
 
   cargo-machete:
     name: QA (Cargo Machete)
