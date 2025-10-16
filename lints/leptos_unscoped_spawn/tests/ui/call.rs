@@ -1,5 +1,5 @@
-use leptos::task::spawn_local;
 use leptos::task;
+use leptos::task::spawn_local;
 
 fn main() {
     spawn_local(async {
