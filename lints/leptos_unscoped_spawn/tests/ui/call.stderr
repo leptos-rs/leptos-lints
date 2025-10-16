@@ -1,5 +1,5 @@
 error: use of `leptos::task::spawn_local`
-  --> $DIR/call.rs:1:19
+  --> $DIR/call.rs:2:19
    |
 LL | use leptos::task::spawn_local;
    |                   ^^^^^^^^^^^
