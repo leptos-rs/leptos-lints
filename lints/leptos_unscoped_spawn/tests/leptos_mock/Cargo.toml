@@ -1,5 +1,5 @@
 [package]
-name = "leptos-print-stdout-mock"
+name = "leptos-unscoped-spawn-mock"
 authors = ["Álvaro Mondéjar Rubio"]
 description = "Mock of the `leptos` crate, to use in tests."
 version.workspace = true

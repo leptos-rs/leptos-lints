@@ -1,7 +1,7 @@
 [package]
-name = "leptos_print_stdout"
+name = "leptos_unscoped_spawn"
 authors = ["Álvaro Mondéjar Rubio"]
-description = "Check for calls to `leptos::logging::log!`"
+description = "Forbids the use of `leptos::task::spawn_local`"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -12,7 +12,7 @@ repository.workspace = true
 crate-type = ["cdylib", "rlib"]
 
 [[example]]
-name = "leptos_print_stdout_call"
+name = "leptos_unscoped_spawn_call"
 path = "tests/ui/call.rs"
 
 [dependencies]
@@ -21,7 +21,7 @@ dylint_linting.workspace = true
 
 [dev-dependencies]
 dylint_testing.workspace = true
-leptos = { package = "leptos-print-stdout-mock", path = "tests/leptos_mock" }
+leptos = { package = "leptos-unscoped-spawn-mock", path = "tests/leptos_mock" }
 
 [package.metadata.rust-analyzer]
 rustc_private = true

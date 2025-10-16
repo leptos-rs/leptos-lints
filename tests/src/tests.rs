@@ -139,7 +139,9 @@ fn lints_have_help_link() {
             .unwrap_or_else(|_| panic!("Failed to read lib/{lint_name}/src/lib.rs",));
 
         assert!(
-            lint_lib_rs_content.contains("for further information visit"),
+            lint_lib_rs_content
+                .to_lowercase()
+                .contains("for further information visit"),
             "Lint help does not contains the sentence \"for further information visit\" at file {}.",
             lint_lib_rs_path.display(),
         );

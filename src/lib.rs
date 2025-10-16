@@ -10,4 +10,5 @@ extern crate rustc_session;
 #[unsafe(no_mangle)]
 pub fn register_lints(sess: &rustc_session::Session, lint_store: &mut rustc_lint::LintStore) {
     leptos_print_stdout::register_lints(sess, lint_store);
+    leptos_unscoped_spawn::register_lints(sess, lint_store);
 }
