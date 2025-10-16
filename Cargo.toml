@@ -16,6 +16,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 leptos_print_stdout = { path = "lints/leptos_print_stdout", features = ["rlib"] }
+leptos_unscoped_spawn = { path = "lints/leptos_unscoped_spawn", features = ["rlib"] }
 dylint_linting.workspace = true
 
 [package.metadata.rust-analyzer]

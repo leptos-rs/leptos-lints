@@ -1,2 +1,4 @@
 config:
   heading-increment: false
+  no-duplicate-heading:
+    siblings_only: true

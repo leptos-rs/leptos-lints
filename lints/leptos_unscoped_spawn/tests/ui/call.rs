@@ -1,0 +1,16 @@
+use leptos::task::spawn_local;
+use leptos::task;
+
+fn main() {
+    spawn_local(async {
+        // ...
+    });
+
+    task::spawn_local(async {
+        // ...
+    });
+
+    leptos::task::spawn_local(async {
+        // ...
+    });
+}

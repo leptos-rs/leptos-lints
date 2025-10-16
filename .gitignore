@@ -18,3 +18,5 @@ target/
 
 # Lychee
 .lycheecache
+
+lints/**/Cargo.lock
