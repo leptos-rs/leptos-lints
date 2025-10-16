@@ -8,7 +8,6 @@ use clippy_utils::diagnostics::span_lint_and_help;
 use rustc_hir::{HirId, Path};
 use rustc_lint::{LateContext, LateLintPass};
 
-
 dylint_linting::declare_late_lint! {
     /// ### What it does
     ///
@@ -21,9 +20,9 @@ dylint_linting::declare_late_lint! {
     /// In Leptos, it's not always obvious when contexts are available. There are situations
     /// where they are not, like in unscoped spawns. These missing contexts can be difficult
     /// to detect and debug, and lead to run-time bugs.
-    /// 
+    ///
     /// For a in-depth explanation, please refer to [`leptos_unscoped_spawn`'s rationale].
-    /// 
+    ///
     /// [`leptos_unscoped_spawn`'s rationale]: https://github.com/leptos-rs/leptos-lints/blob/main/lints/leptos_unscoped_spawn/RATIONALE.md
     ///
     /// ### Example
