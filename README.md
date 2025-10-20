@@ -14,7 +14,7 @@ Put the next configuration in the _Cargo.toml_ of your workspace.
 
 ```toml
 [workspace.metadata.dylint]
-libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.0" }]
+libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.1" }]
 ```
 
 Run the lints with
@@ -31,7 +31,7 @@ See `cargo dylint --help` for more information.
 
 ```toml
 [workspace.metadata.dylint]
-libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.0" }]
+libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.1" }]
 ```
 
 ### Lint levels
@@ -83,7 +83,7 @@ The downside of this approach is that unknown lints will be allowed by default.
 | Rule | Description | Default level |
 | --- | --- | :-: |
 | [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!` | warn |
-| [`leptos_unscoped_spawn`] | Forbids the use of `leptos::task::spawn_local` | deny |
+| [`leptos_unscoped_spawn`] | Forbids the use of `leptos::task::spawn_local` | warn |
 
 [`leptos_print_stdout`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_print_stdout#readme
 [`leptos_unscoped_spawn`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme
