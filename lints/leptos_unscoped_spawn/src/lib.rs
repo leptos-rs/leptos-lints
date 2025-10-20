@@ -3,7 +3,7 @@
 extern crate rustc_hir;
 
 use clippy_utils::diagnostics::span_lint_and_help;
-use rustc_hir::{ExprKind, Expr, QPath};
+use rustc_hir::{Expr, ExprKind, QPath};
 use rustc_lint::{LateContext, LateLintPass};
 
 dylint_linting::declare_late_lint! {
