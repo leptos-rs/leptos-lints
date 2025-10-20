@@ -333,7 +333,7 @@ fn lints_table_is_updated() {
         std::fs::write(&readme_path, &expected_readme_content)
             .unwrap_or_else(|_| panic!("Failed to write README.md"));
     }
-    assert!(readme_content == expected_readme_content, "{message}");
+    assert_eq!(readme_content, expected_readme_content, "{message}");
 }
 
 /// Ensure that all lints descriptions match between their *Cargo.toml* files
