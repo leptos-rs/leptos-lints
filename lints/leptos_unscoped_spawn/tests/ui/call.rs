@@ -13,4 +13,8 @@ fn main() {
     leptos::task::spawn_local(async {
         // ...
     });
+
+    ::leptos::task::spawn_local(async {
+        // ...
+    });
 }

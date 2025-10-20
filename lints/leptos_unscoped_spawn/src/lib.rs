@@ -1,11 +1,9 @@
 #![feature(rustc_private)]
-#![feature(let_chains)]
-#![warn(unused_extern_crates)]
 
 extern crate rustc_hir;
 
 use clippy_utils::diagnostics::span_lint_and_help;
-use rustc_hir::{HirId, Path};
+use rustc_hir::{ExprKind, Expr, QPath};
 use rustc_lint::{LateContext, LateLintPass};
 
 dylint_linting::declare_late_lint! {
@@ -56,21 +54,35 @@ dylint_linting::declare_late_lint! {
 }
 
 impl<'tcx> LateLintPass<'tcx> for LeptosUnscopedSpawn {
-    fn check_path(&mut self, cx: &LateContext<'tcx>, path: &Path<'tcx>, _: HirId) {
-        if let Some(segment) = path.segments.last() {
-            let name = segment.ident.name.to_string();
+    fn check_expr(&mut self, cx: &LateContext<'tcx>, expr: &'tcx Expr<'tcx>) {
+        let ExprKind::Call(func, _) = expr.kind else {
+            return;
+        };
 
-            if name == "spawn_local" {
-                span_lint_and_help(
-                    cx,
-                    LEPTOS_UNSCOPED_SPAWN,
-                    segment.ident.span,
-                    "use of `leptos::task::spawn_local`",
-                    None,
-                    "prefer `leptos::task::spawn_local_scoped`. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme",
-                );
-            }
+        let ExprKind::Path(ref qpath) = func.kind else {
+            return;
+        };
+
+        let Some(def_id) = cx.qpath_res(qpath, expr.hir_id).opt_def_id() else {
+            return;
+        };
+
+        if cx.tcx.item_name(def_id).as_str() != "spawn_local" {
+            return;
         }
+
+        let QPath::Resolved(_, path) = qpath else {
+            return;
+        };
+
+        span_lint_and_help(
+            cx,
+            LEPTOS_UNSCOPED_SPAWN,
+            path.span,
+            "use of `leptos::task::spawn_local`",
+            None,
+            "prefer `leptos::task::spawn_local_scoped`. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme",
+        );
     }
 }
 

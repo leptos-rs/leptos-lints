@@ -1,33 +1,33 @@
 warning: use of `leptos::task::spawn_local`
-  --> $DIR/call.rs:2:19
-   |
-LL | use leptos::task::spawn_local;
-   |                   ^^^^^^^^^^^
-   |
-   = help: prefer `leptos::task::spawn_local_scoped`. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme
-   = note: `#[warn(leptos_unscoped_spawn)]` on by default
-
-warning: use of `leptos::task::spawn_local`
   --> $DIR/call.rs:5:5
    |
 LL |     spawn_local(async {
    |     ^^^^^^^^^^^
    |
    = help: prefer `leptos::task::spawn_local_scoped`. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme
+   = note: `#[warn(leptos_unscoped_spawn)]` on by default
 
 warning: use of `leptos::task::spawn_local`
-  --> $DIR/call.rs:9:11
+  --> $DIR/call.rs:9:5
    |
 LL |     task::spawn_local(async {
-   |           ^^^^^^^^^^^
+   |     ^^^^^^^^^^^^^^^^^
    |
    = help: prefer `leptos::task::spawn_local_scoped`. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme
 
 warning: use of `leptos::task::spawn_local`
-  --> $DIR/call.rs:13:19
+  --> $DIR/call.rs:13:5
    |
 LL |     leptos::task::spawn_local(async {
-   |                   ^^^^^^^^^^^
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: prefer `leptos::task::spawn_local_scoped`. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme
+
+warning: use of `leptos::task::spawn_local`
+  --> $DIR/call.rs:17:5
+   |
+LL |     ::leptos::task::spawn_local(async {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
    |
    = help: prefer `leptos::task::spawn_local_scoped`. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme
 
