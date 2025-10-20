@@ -263,7 +263,9 @@ fn lints_table_is_updated() {
 
         let mut def_links_content = String::new();
 
-        for (lint_name, path) in LintDirectories::new() {
+        let mut lint_directories = LintDirectories::new().collect::<Vec<_>>();
+        lint_directories.sort_by(|a, b| a.0.cmp(&b.0));
+        for (lint_name, path) in lint_directories {
             let lint_cargo_toml_path = path.join("Cargo.toml");
             let lint_cargo_toml_content = std::fs::read_to_string(&lint_cargo_toml_path)
                 .unwrap_or_else(|_| panic!("Failed to read lints/{lint_name}/Cargo.toml"));
