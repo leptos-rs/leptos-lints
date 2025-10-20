@@ -685,15 +685,15 @@ checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 
 [[package]]
 name = "leptos-print-stdout-mock"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "leptos-unscoped-spawn-mock"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "leptos_lints"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "dylint_linting",
  "leptos_print_stdout",
@@ -702,7 +702,7 @@ dependencies = [
 
 [[package]]
 name = "leptos_print_stdout"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clippy_utils",
  "dylint_linting",
@@ -712,7 +712,7 @@ dependencies = [
 
 [[package]]
 name = "leptos_unscoped_spawn"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clippy_utils",
  "dylint_linting",
@@ -1202,7 +1202,7 @@ dependencies = [
 
 [[package]]
 name = "tests"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "thiserror"

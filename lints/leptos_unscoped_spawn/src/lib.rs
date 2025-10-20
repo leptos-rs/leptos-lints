@@ -51,7 +51,7 @@ dylint_linting::declare_late_lint! {
     /// });
     /// ```
     pub LEPTOS_UNSCOPED_SPAWN,
-    Deny,
+    Warn,
     "Forbids the use of `leptos::task::spawn_local`"
 }
 
