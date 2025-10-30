@@ -83,10 +83,12 @@ The downside of this approach is that unknown lints will be allowed by default.
 | Rule | Description | Default level |
 | --- | --- | :-: |
 | [`leptos_event_target`] | Warn about usages of `leptos::prelude::event_target` | warn |
+| [`leptos_event_target_value`] | Warn about usages of `leptos::prelude::event_target_value` | warn |
 | [`leptos_print_stdout`] | Check for calls to `leptos::logging::log!` | warn |
 | [`leptos_unscoped_spawn`] | Forbids the use of `leptos::task::spawn_local` | warn |
 
 [`leptos_event_target`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_event_target#readme
+[`leptos_event_target_value`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_event_target_value#readme
 [`leptos_print_stdout`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_print_stdout#readme
 [`leptos_unscoped_spawn`]: https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_unscoped_spawn#readme
 

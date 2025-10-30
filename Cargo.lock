@@ -688,6 +688,10 @@ name = "leptos-event-target-mock"
 version = "0.1.1"
 
 [[package]]
+name = "leptos-event-target-value-mock"
+version = "0.1.1"
+
+[[package]]
 name = "leptos-print-stdout-mock"
 version = "0.1.1"
 
@@ -706,11 +710,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "leptos_event_target_value"
+version = "0.1.1"
+dependencies = [
+ "clippy_utils",
+ "dylint_linting",
+ "dylint_testing",
+ "leptos-event-target-value-mock",
+]
+
+[[package]]
 name = "leptos_lints"
 version = "0.1.1"
 dependencies = [
  "dylint_linting",
  "leptos_event_target",
+ "leptos_event_target_value",
  "leptos_print_stdout",
  "leptos_unscoped_spawn",
 ]

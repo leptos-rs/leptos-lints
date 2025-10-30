@@ -1,0 +1,33 @@
+[package]
+name = "leptos_event_target_value"
+authors = ["Álvaro Mondéjar Rubio"]
+description = "Warn about usages of `leptos::prelude::event_target_value`"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+repository.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[example]]
+name = "leptos_event_target_value_call"
+path = "tests/ui/call.rs"
+
+[dependencies]
+clippy_utils.workspace = true
+dylint_linting.workspace = true
+
+[dev-dependencies]
+dylint_testing.workspace = true
+leptos = { package = "leptos-event-target-value-mock", path = "tests/leptos_mock" }
+
+[package.metadata.rust-analyzer]
+rustc_private = true
+
+[features]
+rlib = ["dylint_linting/constituent"]
+
+[lints]
+workspace = true
