@@ -1,0 +1,35 @@
+warning: use of `leptos::prelude::event_target`
+  --> $DIR/call.rs:5:5
+   |
+LL |     event_target::<u32>();
+   |     ^^^^^^^^^^^^^^^^^^^
+   |
+   = help: this function can panic at run-time if the target doesn't have an event. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_event_target#readme
+   = note: `#[warn(leptos_event_target)]` on by default
+
+warning: use of `leptos::prelude::event_target`
+  --> $DIR/call.rs:7:28
+   |
+LL |     let _a: Option<&str> = prelude::event_target();
+   |                            ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: this function can panic at run-time if the target doesn't have an event. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_event_target#readme
+
+warning: use of `leptos::prelude::event_target`
+  --> $DIR/call.rs:9:5
+   |
+LL |     leptos::prelude::event_target::<String>();
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: this function can panic at run-time if the target doesn't have an event. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_event_target#readme
+
+warning: use of `leptos::prelude::event_target`
+  --> $DIR/call.rs:11:34
+   |
+LL |     let _b: Option<Option<u8>> = ::leptos::prelude::event_target();
+   |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: this function can panic at run-time if the target doesn't have an event. For further information visit https://github.com/leptos-rs/leptos-lints/tree/main/lints/leptos_event_target#readme
+
+warning: 4 warnings emitted
+
