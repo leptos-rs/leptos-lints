@@ -43,7 +43,7 @@ dylint_linting::declare_late_lint! {
     /// let target = match event.target() {
     ///     Some(t) => t.dyn_into::<web_sys::Document>().ok(),
     ///     None => {
-    ///        // handle the case where there is no targetç
+    ///        // handle the case where there is no target
     ///        todo!()
     ///     },
     /// };
