@@ -14,7 +14,7 @@ Put the next configuration in the _Cargo.toml_ of your workspace.
 
 ```toml
 [workspace.metadata.dylint]
-libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.1" }]
+libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.2" }]
 ```
 
 Run the lints with
@@ -31,7 +31,7 @@ See `cargo dylint --help` for more information.
 
 ```toml
 [workspace.metadata.dylint]
-libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.1" }]
+libraries = [{ git = "https://github.com/leptos-rs/leptos-lints", tag = "v0.1.2" }]
 ```
 
 ### Lint levels
