@@ -12,4 +12,5 @@ pub fn register_lints(sess: &rustc_session::Session, lint_store: &mut rustc_lint
     leptos_print_stdout::register_lints(sess, lint_store);
     leptos_unscoped_spawn::register_lints(sess, lint_store);
     leptos_event_target::register_lints(sess, lint_store);
+    leptos_event_target_value::register_lints(sess, lint_store);
 }

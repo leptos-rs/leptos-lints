@@ -685,19 +685,23 @@ checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 
 [[package]]
 name = "leptos-event-target-mock"
-version = "0.1.1"
+version = "0.1.2"
+
+[[package]]
+name = "leptos-event-target-value-mock"
+version = "0.1.2"
 
 [[package]]
 name = "leptos-print-stdout-mock"
-version = "0.1.1"
+version = "0.1.2"
 
 [[package]]
 name = "leptos-unscoped-spawn-mock"
-version = "0.1.1"
+version = "0.1.2"
 
 [[package]]
 name = "leptos_event_target"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "clippy_utils",
  "dylint_linting",
@@ -706,18 +710,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "leptos_event_target_value"
+version = "0.1.2"
+dependencies = [
+ "clippy_utils",
+ "dylint_linting",
+ "dylint_testing",
+ "leptos-event-target-value-mock",
+]
+
+[[package]]
 name = "leptos_lints"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "dylint_linting",
  "leptos_event_target",
+ "leptos_event_target_value",
  "leptos_print_stdout",
  "leptos_unscoped_spawn",
 ]
 
 [[package]]
 name = "leptos_print_stdout"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "clippy_utils",
  "dylint_linting",
@@ -727,7 +742,7 @@ dependencies = [
 
 [[package]]
 name = "leptos_unscoped_spawn"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "clippy_utils",
  "dylint_linting",
@@ -1217,7 +1232,7 @@ dependencies = [
 
 [[package]]
 name = "tests"
-version = "0.1.1"
+version = "0.1.2"
 
 [[package]]
 name = "thiserror"
