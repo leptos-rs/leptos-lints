@@ -35,8 +35,18 @@ let target = leptos::prelude::event_target::<web_sys::Document>(&event);
 Use instead:
 
 ```rust,ignore
+let target = match event.target() {
+    Some(t) => t.dyn_into::<web_sys::Document>().ok(),
+    None => {
+       // handle the case where there is no targetç
+       todo!()
+    },
+};
+```
+
+Or allow the lint if you're sure that the event has a target:
+
+```rust,ignore
 #[allow(leptos_event_target)]
 let target = leptos::prelude::event_target::<web_sys::Document>(&event);
 ```
-
-But make sure that the event has a target at run-time!
