@@ -38,7 +38,7 @@ dylint_linting::declare_late_lint! {
     /// ```
     ///
     /// Use instead:
-    /// 
+    ///
     /// ```rust,ignore
     /// let target = match event.target() {
     ///     Some(t) => t.dyn_into::<web_sys::Document>().ok(),
@@ -48,7 +48,7 @@ dylint_linting::declare_late_lint! {
     ///     },
     /// };
     /// ```
-    /// 
+    ///
     /// Or allow the lint if you're sure that the event has a target:
     ///
     /// ```rust,ignore
